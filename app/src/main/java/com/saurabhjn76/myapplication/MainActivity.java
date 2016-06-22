@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -106,10 +107,10 @@ public class MainActivity extends AppCompatActivity {
          * The fragment argument representing the section number for this
          * fragment.
          */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-        private static  final String ARG_SALON_NAME="salon_name";
-        private static  final String ARG_SALON_DISTANCE="salon_distance";
-        private static  final String ARG_SALON_ADDRESS="salon_address";
+        private static final  String ARG_SECTION_NUMBER = "section_number";
+        private static String ARG_SALON_NAME;
+        private   static String ARG_SALON_DISTANCE;
+        private static   String ARG_SALON_ADDRESS;
 
 
         public PlaceholderFragment() {
@@ -119,14 +120,18 @@ public class MainActivity extends AppCompatActivity {
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber,Salon salon) {
+        public static PlaceholderFragment newInstance(int sectionNumber,String SALON_NAME,String SALON_DISTANCE,String SALON_ADDRESS) {
             PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
+           // Toast.makeText(getContext(),SALON_NAME,Toast.LENGTH_SHORT).show();
+            ARG_SALON_NAME=SALON_NAME;
+            ARG_SALON_DISTANCE=SALON_DISTANCE;
+            ARG_SALON_ADDRESS=SALON_ADDRESS;
+            System.out.println(SALON_NAME);
+             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            args.putDouble(ARG_SALON_DISTANCE,salon.getDistance());
-            args.putString(ARG_SALON_NAME,salon.getSalonName());
-            args.putString(ARG_SALON_ADDRESS,salon.getAddressLine1() + " " + salon.getAddressLine2() );
-
+            args.putString(ARG_SALON_DISTANCE,SALON_DISTANCE);
+            args.putString(ARG_SALON_NAME,SALON_NAME);
+            args.putString(ARG_SALON_ADDRESS,SALON_ADDRESS);
             fragment.setArguments(args);
             return fragment;
         }
@@ -142,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
             salonName.setText(ARG_SALON_NAME);
            // salonName.setText(salons.get(ARG_SECTION_NUMBER).getSalonName());
             TextView salonDistance = (TextView)rootView.findViewById(R.id.salon_distance);
-            salonDistance.setText(ARG_SALON_DISTANCE);
+            salonDistance.setText(ARG_SALON_DISTANCE+"Km");
             TextView salonAddress = (TextView)rootView.findViewById(R.id.AddressTextView);
             salonAddress.setText(ARG_SALON_ADDRESS);
             ImageView salonPhoto = (ImageView)rootView.findViewById(R.id.salon_photo);
@@ -176,12 +181,15 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1,salons.get(position));
+           // Toast.makeText(getApplicationContext(),salons.get(position).getSalonName(),Toast.LENGTH_SHORT).show();
+            PlaceholderFragment placeholderFragment = new PlaceholderFragment();
+            Salon salon =salons.get(position);
+            return placeholderFragment.newInstance(position + 1,salon.getSalonName(),""+salon.getDistance(),salon.getAddressLine1()+" "+salon.getAddressLine2());
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
+            // Show  total pages.
             return salons.size();
         }
 
@@ -239,6 +247,7 @@ public class MainActivity extends AppCompatActivity {
                     // System.out.println(salon.getSalonName());
                     Log.e("data", "" + salon);
                     salons.add(salon);
+//                    notify();
                     mSectionsPagerAdapter.notifyDataSetChanged();
 
                 }
