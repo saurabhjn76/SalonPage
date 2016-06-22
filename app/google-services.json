@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "263794023818",
+    "firebase_url": "https://salon-app-dad97.firebaseio.com",
+    "project_id": "salon-app-dad97",
+    "storage_bucket": "salon-app-dad97.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:263794023818:android:3661890be5d0c7e4",
+        "android_client_info": {
+          "package_name": "com.saurabhjn76.userapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "263794023818-6a8dvc6keen3d2cmjdf29m8ol5oe1s1v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGULQABvIielQ5Ekyru8gzs9eG2Uy8_FU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:263794023818:android:277fc808540f1a74",
+        "android_client_info": {
+          "package_name": "com.saurabhjn76.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "263794023818-6a8dvc6keen3d2cmjdf29m8ol5oe1s1v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGULQABvIielQ5Ekyru8gzs9eG2Uy8_FU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
