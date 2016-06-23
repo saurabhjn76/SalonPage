@@ -2,6 +2,7 @@ package com.saurabhjn76.myapplication;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +19,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
     public  ArrayList<Salon> salons= new ArrayList<Salon>();
+    public static ActionBar supportActionBar;
+    public static Toolbar toolbarbottom;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -52,10 +59,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
+
         setContentView(R.layout.activity_main);
         readData();
-       /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);*/
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+         toolbarbottom = (Toolbar) findViewById(R.id.toolbarBottom);
+
+        setSupportActionBar(toolbar);
+       supportActionBar= getSupportActionBar();
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -63,16 +75,31 @@ public class MainActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (VerticalViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        View tempview =getLayoutInflater().inflate(R.layout.fragment_main,null);
+        CardView im = (CardView)tempview.findViewById(R.id.cv);
 
 
-      /*  FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+
+
+
+        im.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+               // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+
+                       // .setAction("Action", null).show();
+                if(getSupportActionBar().isShowing()) {
+                     getSupportActionBar().hide();
+                    toolbarbottom.animate().translationY(toolbarbottom.getBottom()).setInterpolator(new AccelerateInterpolator()).start();
+                }
+
+                else {
+                    getSupportActionBar().show();
+
+                     toolbarbottom.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
+                }
             }
-        });*/
+        });
 
     }
 
@@ -151,6 +178,24 @@ public class MainActivity extends AppCompatActivity {
             TextView salonAddress = (TextView)rootView.findViewById(R.id.AddressTextView);
             salonAddress.setText(ARG_SALON_ADDRESS);
             ImageView salonPhoto = (ImageView)rootView.findViewById(R.id.salon_photo);
+            salonPhoto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(),"fgfgdfgd",Toast.LENGTH_SHORT).show();
+                    if(supportActionBar.isShowing()) {
+                        supportActionBar.hide();
+                        toolbarbottom.animate().translationY(toolbarbottom.getBottom()).setInterpolator(new AccelerateInterpolator()).start();
+                    }
+
+                    else {
+                        supportActionBar.show();
+
+                        toolbarbottom.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
+                    }
+
+                }
+            });
+
             switch (getArguments().getInt(ARG_SECTION_NUMBER) % 3) {
                 case 0:
                     salonPhoto.setImageResource(R.drawable.hair_inside_salon);
