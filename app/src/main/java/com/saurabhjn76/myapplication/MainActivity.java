@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     public static ActionBar supportActionBar;
     public static Toolbar toolbarbottom;
     public static Toolbar toolbar;
-    public static int click_count=1;
+
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private VerticalViewPager mViewPager;
     public static TextView salonDistance;
     public static TextView salonPrice;
+    private static ImageView salonPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
         mViewPager = (VerticalViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         View tempview =getLayoutInflater().inflate(R.layout.fragment_main,null);
-
 
 
     }
@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
         private static String ARG_SALON_NAME;
         private   static String ARG_SALON_DISTANCE;
         private static   String ARG_SALON_ADDRESS;
+        public static int click_count=0;
 
 
         public PlaceholderFragment() {
@@ -170,32 +171,8 @@ public class MainActivity extends AppCompatActivity {
             toolbarbottom.setContentInsetsAbsolute(0,0);
             toolbarbottom.setContentInsetsRelative(0,0);
             toolbarbottom.setPadding(0,0,0,0);
-            ImageView salonPhoto = (ImageView)rootView.findViewById(R.id.salon_photo);
-
-            salonPhoto.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                   // Toast.makeText(getContext(),"fgfgdfgd",Toast.LENGTH_SHORT).show();
-                    if(click_count%2==0) {
-                        // getSupportActionBar().hide();
-                        toolbar.animate().translationY(-1*toolbarbottom.getBottom()).setInterpolator(new AccelerateInterpolator()).start();
-                        toolbarbottom.animate().translationY(toolbarbottom.getBottom()).setInterpolator(new AccelerateInterpolator()).start();
-                        click_count=1;
-                    }
-
-                    else {
-                        //getSupportActionBar().show();
-
-                        toolbarbottom.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
-                        toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
-                        click_count=0;
-                    }
-
-                }
-            });
-
+            salonPhoto = (ImageView)rootView.findViewById(R.id.salon_photo);
             salonPrice.setText("₹" + (int)350+getArguments().getInt(ARG_SECTION_NUMBER));
-
             switch (getArguments().getInt(ARG_SECTION_NUMBER) % 3) {
                 case 0:
                     salonPhoto.setImageResource(R.drawable.hair_inside_salon);
@@ -222,6 +199,27 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), PriceLayoutActivity.class);
                     getActivity().startActivity(intent);
+                }
+            });
+            salonPhoto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                     Toast.makeText(getContext(),click_count,Toast.LENGTH_SHORT).show();
+                    if(click_count%2==0) {
+                        // getSupportActionBar().hide();
+                        toolbar.animate().translationY(-1*toolbarbottom.getBottom()).setInterpolator(new AccelerateInterpolator()).start();
+                        //toolbarbottom.animate().translationY(toolbarbottom.getBottom()).setInterpolator(new AccelerateInterpolator()).start();
+                        click_count=1;
+                    }
+
+                    else {
+                        //getSupportActionBar().show();
+
+                       // toolbarbottom.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
+                        toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
+                        click_count=0;
+                    }
+
                 }
             });
 
