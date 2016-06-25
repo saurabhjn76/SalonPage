@@ -8,34 +8,21 @@
     android:fitsSystemWindows="true"
     tools:context="com.saurabhjn76.myapplication.MainActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:animateLayoutChanges="true"
-        >
-        <android.support.v7.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/toolbar" />
-    </android.support.design.widget.AppBarLayout>
+
+
+
 
 
     <com.saurabhjn76.myapplication.VerticalViewPager
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:background="#000000"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#AA111111"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        android:clipToPadding="false"
-        android:fitsSystemWindows="true"
-        android:gravity="bottom"
-        android:id="@+id/toolbarBottom"/>
+
+
+
+
 
 
 

@@ -1,5 +1,7 @@
 package com.saurabhjn76.myapplication;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
@@ -50,11 +52,15 @@ public class MainActivity extends AppCompatActivity {
     public  ArrayList<Salon> salons= new ArrayList<Salon>();
     public static ActionBar supportActionBar;
     public static Toolbar toolbarbottom;
+    public static Toolbar toolbar;
+    public static int click_count=1;
 
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     private VerticalViewPager mViewPager;
+    public static TextView salonDistance;
+    public static TextView salonPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +69,11 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         readData();
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-         toolbarbottom = (Toolbar) findViewById(R.id.toolbarBottom);
 
-        setSupportActionBar(toolbar);
-       supportActionBar= getSupportActionBar();
+
+
+        //setSupportActionBar(toolbar);
+       //supportActionBar= getSupportActionBar();
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -76,30 +82,8 @@ public class MainActivity extends AppCompatActivity {
         mViewPager = (VerticalViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         View tempview =getLayoutInflater().inflate(R.layout.fragment_main,null);
-        CardView im = (CardView)tempview.findViewById(R.id.cv);
 
 
-
-
-
-        im.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-
-                       // .setAction("Action", null).show();
-                if(getSupportActionBar().isShowing()) {
-                     getSupportActionBar().hide();
-                    toolbarbottom.animate().translationY(toolbarbottom.getBottom()).setInterpolator(new AccelerateInterpolator()).start();
-                }
-
-                else {
-                    getSupportActionBar().show();
-
-                     toolbarbottom.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
-                }
-            }
-        });
 
     }
 
@@ -169,36 +153,53 @@ public class MainActivity extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
+            toolbar.setContentInsetsAbsolute(0,0);
            CardView cv = (CardView)rootView.findViewById(R.id.cv);
             TextView salonName = (TextView)rootView.findViewById(R.id.salon_name);
+            salonDistance = (TextView)rootView.findViewById(R.id.salon_distance);
+            salonPrice = (TextView)rootView.findViewById(R.id.salon_price);
             salonName.setText(ARG_SALON_NAME);
            // salonName.setText(salons.get(ARG_SECTION_NUMBER).getSalonName());
-            TextView salonDistance = (TextView)rootView.findViewById(R.id.salon_distance);
+
             salonDistance.setText(ARG_SALON_DISTANCE+"Km");
-            TextView salonAddress = (TextView)rootView.findViewById(R.id.AddressTextView);
-            salonAddress.setText(ARG_SALON_ADDRESS);
+
+            /*TextView salonAddress = (TextView)rootView.findViewById(R.id.AddressTextView);*/
+           /* salonAddress.setText(ARG_SALON_ADDRESS);*/
+            toolbarbottom = (Toolbar) rootView.findViewById(R.id.toolbarBottom);
+            toolbarbottom.setContentInsetsAbsolute(0,0);
+            toolbarbottom.setContentInsetsRelative(0,0);
+            toolbarbottom.setPadding(0,0,0,0);
             ImageView salonPhoto = (ImageView)rootView.findViewById(R.id.salon_photo);
+
             salonPhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getContext(),"fgfgdfgd",Toast.LENGTH_SHORT).show();
-                    if(supportActionBar.isShowing()) {
-                        supportActionBar.hide();
+                   // Toast.makeText(getContext(),"fgfgdfgd",Toast.LENGTH_SHORT).show();
+                    if(click_count%2==0) {
+                        // getSupportActionBar().hide();
+                        toolbar.animate().translationY(-1*toolbarbottom.getBottom()).setInterpolator(new AccelerateInterpolator()).start();
                         toolbarbottom.animate().translationY(toolbarbottom.getBottom()).setInterpolator(new AccelerateInterpolator()).start();
+                        click_count=1;
                     }
 
                     else {
-                        supportActionBar.show();
+                        //getSupportActionBar().show();
 
                         toolbarbottom.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
+                        toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
+                        click_count=0;
                     }
 
                 }
             });
 
+            salonPrice.setText("₹" + (int)350+getArguments().getInt(ARG_SECTION_NUMBER));
+
             switch (getArguments().getInt(ARG_SECTION_NUMBER) % 3) {
                 case 0:
                     salonPhoto.setImageResource(R.drawable.hair_inside_salon);
+
                     break;
                 case 1:
                    salonPhoto.setImageResource(R.drawable.salon_4_full);
@@ -207,6 +208,23 @@ public class MainActivity extends AppCompatActivity {
                    salonPhoto.setImageResource(R.drawable.slider_newton_highlands);
                     break;
             }
+            salonDistance.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), MapsActivity.class);
+                    intent.putExtra("salon_address",ARG_SALON_ADDRESS);
+                    intent.putExtra("salon_name",ARG_SALON_NAME);
+                    getActivity().startActivity(intent);
+                }
+            });
+            salonPrice.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), PriceLayoutActivity.class);
+                    getActivity().startActivity(intent);
+                }
+            });
+
             return rootView;
         }
     }
