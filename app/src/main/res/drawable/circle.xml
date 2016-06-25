@@ -10,7 +10,7 @@
             android:color="#DD111111"/>
         <stroke
             android:width="4dp"
-            android:color="#000000" />
+            android:color="#dddddd" />
         <padding
             android:bottom="30dp"
             android:left="30dp"

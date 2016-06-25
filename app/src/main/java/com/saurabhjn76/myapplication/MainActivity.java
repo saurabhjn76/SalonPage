@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (VerticalViewPager) findViewById(R.id.container);
+
         mViewPager.setAdapter(mSectionsPagerAdapter);
         View tempview =getLayoutInflater().inflate(R.layout.fragment_main,null);
 
@@ -154,19 +156,24 @@ public class MainActivity extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            return rootView;
+        }
+        @Override
+        public void onViewCreated(View rootView, Bundle savedInstanceState) {
+            super.onViewCreated(rootView, savedInstanceState);
             toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
             toolbar.setContentInsetsAbsolute(0,0);
-           CardView cv = (CardView)rootView.findViewById(R.id.cv);
+            CardView cv = (CardView)rootView.findViewById(R.id.cv);
             TextView salonName = (TextView)rootView.findViewById(R.id.salon_name);
             salonDistance = (TextView)rootView.findViewById(R.id.salon_distance);
             salonPrice = (TextView)rootView.findViewById(R.id.salon_price);
             salonName.setText(ARG_SALON_NAME);
-           // salonName.setText(salons.get(ARG_SECTION_NUMBER).getSalonName());
+            // salonName.setText(salons.get(ARG_SECTION_NUMBER).getSalonName());
 
             salonDistance.setText(ARG_SALON_DISTANCE+"Km");
 
-            /*TextView salonAddress = (TextView)rootView.findViewById(R.id.AddressTextView);*/
-           /* salonAddress.setText(ARG_SALON_ADDRESS);*/
+            //TextView salonAddress = (TextView)rootView.findViewById(R.id.AddressTextView);
+            //salonAddress.setText(ARG_SALON_ADDRESS);
             toolbarbottom = (Toolbar) rootView.findViewById(R.id.toolbarBottom);
             toolbarbottom.setContentInsetsAbsolute(0,0);
             toolbarbottom.setContentInsetsRelative(0,0);
@@ -179,10 +186,10 @@ public class MainActivity extends AppCompatActivity {
 
                     break;
                 case 1:
-                   salonPhoto.setImageResource(R.drawable.salon_4_full);
+                    salonPhoto.setImageResource(R.drawable.salon_4_full);
                     break;
                 case 2:
-                   salonPhoto.setImageResource(R.drawable.slider_newton_highlands);
+                    salonPhoto.setImageResource(R.drawable.slider_newton_highlands);
                     break;
             }
             salonDistance.setOnClickListener(new View.OnClickListener() {
@@ -204,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
             salonPhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                     Toast.makeText(getContext(),click_count,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),click_count+ "",Toast.LENGTH_SHORT).show();
                     if(click_count%2==0) {
                         // getSupportActionBar().hide();
                         toolbar.animate().translationY(-1*toolbarbottom.getBottom()).setInterpolator(new AccelerateInterpolator()).start();
@@ -215,15 +222,13 @@ public class MainActivity extends AppCompatActivity {
                     else {
                         //getSupportActionBar().show();
 
-                       // toolbarbottom.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
+                        // toolbarbottom.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
                         toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
                         click_count=0;
                     }
 
                 }
             });
-
-            return rootView;
         }
     }
 
@@ -231,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
         private FragmentManager mFragmentManager;
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -246,12 +251,14 @@ public class MainActivity extends AppCompatActivity {
             PlaceholderFragment placeholderFragment = new PlaceholderFragment();
             Salon salon =salons.get(position);
             return placeholderFragment.newInstance(position + 1,salon.getSalonName(),""+salon.getDistance(),salon.getAddressLine1()+" "+salon.getAddressLine2());
+            //return placeholderFragment.newInstance(position+1,"","","");
         }
 
         @Override
         public int getCount() {
             // Show  total pages.
-            return salons.size();
+         return salons.size();
+
         }
 
         @Override
@@ -309,9 +316,10 @@ public class MainActivity extends AppCompatActivity {
                     Log.e("data", "" + salon);
                     salons.add(salon);
 //                    notify();
-                    mSectionsPagerAdapter.notifyDataSetChanged();
+                   mSectionsPagerAdapter.notifyDataSetChanged();
 
                 }
+                mViewPager.setOffscreenPageLimit(3);
             }
 
             @Override
