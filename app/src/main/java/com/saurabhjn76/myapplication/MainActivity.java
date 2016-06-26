@@ -2,6 +2,8 @@ package com.saurabhjn76.myapplication;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -163,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
             super.onViewCreated(rootView, savedInstanceState);
             toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
             toolbar.setContentInsetsAbsolute(0,0);
-            CardView cv = (CardView)rootView.findViewById(R.id.cv);
+           // CardView cv = (CardView)rootView.findViewById(R.id.cv);
             TextView salonName = (TextView)rootView.findViewById(R.id.salon_name);
             salonDistance = (TextView)rootView.findViewById(R.id.salon_distance);
             salonPrice = (TextView)rootView.findViewById(R.id.salon_price);
@@ -180,16 +182,26 @@ public class MainActivity extends AppCompatActivity {
             toolbarbottom.setPadding(0,0,0,0);
             salonPhoto = (ImageView)rootView.findViewById(R.id.salon_photo);
             salonPrice.setText("₹" + (int)350+getArguments().getInt(ARG_SECTION_NUMBER));
-            switch (getArguments().getInt(ARG_SECTION_NUMBER) % 3) {
+             BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 3;
+            options.inDither = false;
+            Bitmap bitmap ;
+            /*switch (getArguments().getInt(ARG_SECTION_NUMBER) % 3) {
                 case 0:
-                    salonPhoto.setImageResource(R.drawable.hair_inside_salon);
+                    //salonPhoto.setImageResource(R.drawable.hair_inside_salon);
+                    bitmap= BitmapFactory.decodeResource(getResources(),R.drawable.hair_inside_salon, options );
+                    salonPhoto.setImageBitmap(bitmap);
 
                     break;
                 case 1:
-                    salonPhoto.setImageResource(R.drawable.salon_4_full);
+                    //salonPhoto.setImageResource(R.drawable.salon_4_full);
+                    bitmap= BitmapFactory.decodeResource(getResources(),R.drawable.salon_4_full, options );
+                    salonPhoto.setImageBitmap(bitmap);
                     break;
                 case 2:
-                    salonPhoto.setImageResource(R.drawable.slider_newton_highlands);
+                    //salonPhoto.setImageResource(R.drawable.slider_newton_highlands);
+                    bitmap= BitmapFactory.decodeResource(getResources(),R.drawable.slider_newton_highlands, options );
+                    salonPhoto.setImageBitmap(bitmap);
                     break;
             }
             salonDistance.setOnClickListener(new View.OnClickListener() {
@@ -207,8 +219,8 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(getActivity(), PriceLayoutActivity.class);
                     getActivity().startActivity(intent);
                 }
-            });
-            salonPhoto.setOnClickListener(new View.OnClickListener() {
+            });*/
+            salonPrice.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(getContext(),click_count+ "",Toast.LENGTH_SHORT).show();
