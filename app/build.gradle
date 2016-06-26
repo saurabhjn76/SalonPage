@@ -43,5 +43,6 @@ dependencies {
     compile 'com.android.support:multidex:1.0.0'
     compile 'org.apache.httpcomponents:httpcore:4.4.1'
     compile 'org.apache.httpcomponents:httpclient:4.5'
+    compile 'com.android.support:support-v4:23.4.0'
 }
 apply plugin: 'com.google.gms.google-services'
