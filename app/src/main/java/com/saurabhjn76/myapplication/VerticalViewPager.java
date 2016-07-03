@@ -9,6 +9,7 @@ import android.view.View;
 /**
  * Created by saurabh on 21/6/16.
  */
+
 public class VerticalViewPager extends ViewPager {
 
     public VerticalViewPager(Context context) {
@@ -20,6 +21,7 @@ public class VerticalViewPager extends ViewPager {
         super(context, attrs);
         init();
     }
+
 
     private void init() {
         // The majority of the magic happens here

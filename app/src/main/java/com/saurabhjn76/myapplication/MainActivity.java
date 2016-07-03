@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -55,7 +56,9 @@ public class MainActivity extends AppCompatActivity {
     public  ArrayList<Salon> salons= new ArrayList<Salon>();
     public static ActionBar supportActionBar;
     public static Toolbar toolbarbottom;
-    public static Toolbar toolbar;
+    public  static  Toolbar toolbar;
+    public static int click_count=0;
+
 
 
     /**
@@ -84,12 +87,73 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (VerticalViewPager) findViewById(R.id.container);
+       /* mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                bindListner(position);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                bindListner(position);
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });*/
 
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        View tempview =getLayoutInflater().inflate(R.layout.fragment_main,null);
+        mViewPager.scrollBy(0,0);
+        mViewPager.setOffscreenPageLimit(30);
+
 
 
     }
+    public void Animate(View v) {
+        // Do your stuff
+        // Toast.makeText(getApplicationContext(),click_count+ "",Toast.LENGTH_SHORT).show();
+        {
+            // getSupportActionBar().hide();
+            toolbar.animate().translationY(-1*toolbarbottom.getBottom()).setInterpolator(new AccelerateInterpolator()).start();
+            //toolbarbottom.animate().translationY(toolbarbottom.getBottom()).setInterpolator(new AccelerateInterpolator()).start();
+            click_count=1;
+            notifyAll();
+            // mViewPager.updateViewLayout(v,v.getLayoutParams());
+        }
+
+
+        /*else {
+            //getSupportActionBar().show();
+
+            // toolbarbottom.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
+            toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
+            click_count=0;
+            notifyAll();
+            //mViewPager.updateViewLayout(v,mViewPager.getLayoutParams());
+        }*/
+    }
+   /* public  void bindListner(int position) {
+         SectionsPagerAdapter adapter =(SectionsPagerAdapter) mViewPager.getAdapter();
+        Fragment fragment = adapter.getItem(mViewPager.getCurrentItem());
+
+        View v = fragment.getView();
+        if(v==null)
+        {
+            Toast.makeText(getApplicationContext(),"hello",Toast.LENGTH_SHORT).show();
+        }
+        TextView salon_photo = (TextView) v.findViewById(R.id.salon_price);
+        toolbar = (Toolbar) v.findViewById(R.id.toolbar);
+        salon_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"hello",Toast.LENGTH_SHORT).show();
+                toolbar.animate().translationY(-1 * toolbarbottom.getBottom()).setInterpolator(new AccelerateInterpolator()).start();
+            }
+        });
+    }*/
 
 
     @Override
@@ -122,20 +186,23 @@ public class MainActivity extends AppCompatActivity {
          * The fragment argument representing the section number for this
          * fragment.
          */
+
         private static final  String ARG_SECTION_NUMBER = "section_number";
         private static String ARG_SALON_NAME;
         private   static String ARG_SALON_DISTANCE;
         private static   String ARG_SALON_ADDRESS;
-        public static int click_count=0;
+
 
 
         public PlaceholderFragment() {
         }
 
+
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
+
         public static PlaceholderFragment newInstance(int sectionNumber,String SALON_NAME,String SALON_DISTANCE,String SALON_ADDRESS) {
             PlaceholderFragment fragment = new PlaceholderFragment();
            // Toast.makeText(getContext(),SALON_NAME,Toast.LENGTH_SHORT).show();
@@ -170,6 +237,8 @@ public class MainActivity extends AppCompatActivity {
             salonDistance = (TextView)rootView.findViewById(R.id.salon_distance);
             salonPrice = (TextView)rootView.findViewById(R.id.salon_price);
             salonName.setText(ARG_SALON_NAME);
+            ImageView playbutton=(ImageView)rootView.findViewById(R.id.play_button);
+            ImageView playbutton1=(ImageView)rootView.findViewById(R.id.play_button1);
             // salonName.setText(salons.get(ARG_SECTION_NUMBER).getSalonName());
 
             salonDistance.setText(ARG_SALON_DISTANCE+"Km");
@@ -200,10 +269,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 2:
                     //salonPhoto.setImageResource(R.drawable.slider_newton_highlands);
-                    bitmap= BitmapFactory.decodeResource(getResources(),R.drawable.slider_newton_highlands, options );
+jja                    bitmap= BitmapFactory.decodeResource(getResources(),R.drawable.slider_newton_highlands, options );
                     salonPhoto.setImageBitmap(bitmap);
                     break;
-            }
+            }*/
             salonDistance.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -218,31 +287,59 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), PriceLayoutActivity.class);
                     getActivity().startActivity(intent);
+                   // toolbar.animate().translationY(-1*toolbarbottom.getBottom()).setInterpolator(new AccelerateInterpolator()).start();
                 }
-            });*/
-            salonPrice.setOnClickListener(new View.OnClickListener() {
+            });
+            playbutton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent= new Intent(getActivity(), ThreeSixtyActivity.class);
+                    getActivity().startActivity(intent);
+                }
+            });
+            playbutton1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent= new Intent(getActivity(), ThreeSixtyActivity.class);
+                    getActivity().startActivity(intent);
+                }
+            });
+          /*  salonPrice.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(getContext(),click_count+ "",Toast.LENGTH_SHORT).show();
-                    if(click_count%2==0) {
+
+                 *//*   if(click_count%2==0) {
+                        //toolbar.setCollapsible(true);
+                       // toolbar.setVisibility(v.INVISIBLE);
                         // getSupportActionBar().hide();
-                        toolbar.animate().translationY(-1*toolbarbottom.getBottom()).setInterpolator(new AccelerateInterpolator()).start();
+                        salonPrice.setText("nana");
+                      //  toolbar.animate().translationY(-1*toolbarbottom.getBottom()).setInterpolator(new AccelerateInterpolator()).start();
                         //toolbarbottom.animate().translationY(toolbarbottom.getBottom()).setInterpolator(new AccelerateInterpolator()).start();
                         click_count=1;
                     }
 
                     else {
                         //getSupportActionBar().show();
+                        salonPrice.setText("haha");
 
                         // toolbarbottom.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
-                        toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
+                        //toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
+                        //toolbar.setVisibility(v.VISIBLE);
                         click_count=0;
-                    }
+                    }*//*
 
                 }
-            });
+            });*/
+            super.onViewCreated(rootView,savedInstanceState);
         }
+        public Toolbar getToolbar(){
+            return toolbar;
+        }
+
     }
+
+
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -272,6 +369,7 @@ public class MainActivity extends AppCompatActivity {
          return salons.size();
 
         }
+
 
         @Override
         public CharSequence getPageTitle(int position) {
@@ -331,7 +429,7 @@ public class MainActivity extends AppCompatActivity {
                    mSectionsPagerAdapter.notifyDataSetChanged();
 
                 }
-                mViewPager.setOffscreenPageLimit(3);
+
             }
 
             @Override

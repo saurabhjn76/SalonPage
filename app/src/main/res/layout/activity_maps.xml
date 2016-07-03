@@ -1,9 +1,68 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="350dp"
+android:theme="@style/Theme.UserDialog"
+tools:context="com.saurabhjn76.myapplication.MapsActivity">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:id="@+id/map_toolbar"
+        android:background="@color/colorBackground"
+        android:layout_alignParentBottom="true"
+        android:layout_height="40dp">
+        <TextView
+            android:id="@+id/map_duration"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:textSize="13sp"
+            android:textColor="#000000"
+            android:paddingTop="4dp"
+            android:layout_gravity="center"
+            android:text="@string/hello_world"
+            />
+        <View
+            android:layout_width="2px"
+            android:layout_height="40dp"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:background="#000000"/>
+        <TextView
+            android:layout_width="110dp"
+            android:layout_height="match_parent"
+            android:textSize="12sp"
+            android:gravity="right"
+            android:paddingTop="4dp"
+            android:layout_gravity="right"
+            android:paddingRight="20dp"
+            android:textColor="#000000"
+            android:id="@+id/map_distance"
+            android:text="Distance"
+            />
+
+        <View
+            android:layout_width="2px"
+            android:layout_height="40dp"
+            android:paddingLeft="40dp"
+            android:background="#000000"/>
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:textSize="13sp"
+            android:id="@+id/map_navigation"
+            android:paddingLeft="20dp"
+            android:textColor="#000000"
+            android:text="Navigation"
+            />
+    </LinearLayout>
+
+<fragment
     android:id="@+id/map"
-    android:name="com.google.android.gms.maps.MapFragment"
-    android:layout_width="match_parent"
-    android:layout_height="300dp"
-    tools:context="com.saurabhjn76.myapplication.MapsActivity"
-    android:theme="@style/Theme.UserDialog"/>
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_above="@id/map_toolbar"
+    android:name="com.google.android.gms.maps.SupportMapFragment"
+    />
+
+
+</RelativeLayout>

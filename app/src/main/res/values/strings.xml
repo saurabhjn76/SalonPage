@@ -7,4 +7,7 @@
     <string name="title_activity_three_sixty">ThreeSixtyActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="hello_world">Duration</string>
+    <string name="message_empty_layout_changes">Add an item above to get started.</string>
+    <string name="str_tv_distance_time">Distance</string>
 </resources>
